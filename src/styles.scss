@@ -11,3 +11,21 @@ body {
   font-optical-sizing: auto;
   font-style: normal;
 }
+
+.content {
+  width: 100%;
+  margin: auto;
+
+  @media screen and (min-width: 768px) {
+    max-width: 640px;
+  }
+  @media screen and (min-width: 1024px) {
+    max-width: 960px;
+  }
+  @media screen and (min-width: 1360px) {
+    max-width: 1200px;
+  }
+  @media screen and (max-width: 767px) {
+    margin: 0 20px;
+  }
+}

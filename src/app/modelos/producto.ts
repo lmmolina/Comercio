@@ -8,8 +8,8 @@ export class Producto {
   constructor(
     id: number,
     nombre: string,
-    precio: number,
     descripcion: string,
+    precio: number,
     imagenUrl: string
   ) {
     this.id = id;
