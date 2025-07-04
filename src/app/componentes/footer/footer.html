@@ -1,0 +1,19 @@
+<footer>
+  <nav>
+    <ul>
+      <li><a routerLink="/"> Inicio</a></li>
+      <li><a routerLink="/productos">Productos</a></li>
+      <li><a routerLink="/contacto">Contacto</a></li>
+    </ul>
+  </nav>
+  <div>
+    <form [formGroup]="SuscForm">
+        <input type="email" formControlName="email" placeholder="Suscríbete a nuestro boletín" />
+        <button type="submit" (click)="SuscForm.reset()">Suscribirse</button>
+    </form>
+  </div>
+  <div>
+    <img src="/assets/img/11011680.png" alt="">
+  </div>
+  <p>© 2023 Comercio. All rights reserved.</p>
+</footer>
