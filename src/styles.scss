@@ -14,7 +14,7 @@ body {
 
 .content {
   width: 100%;
-  margin: auto;
+  margin: 30px auto 40px;
 
   @media screen and (min-width: 768px) {
     max-width: 640px;
@@ -29,3 +29,6 @@ body {
     margin: 0 20px;
   }
 }
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';

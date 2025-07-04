@@ -1,3 +1,15 @@
 <div class="content">
-    hasdadadawd
+  <ngb-carousel>
+    @for (pro of productos; track $index) {
+    <ng-template ngbSlide>
+      <div class="my-carousel-item">
+        <img [src]="pro.imagenUrl" />
+        <h3>{{pro.nombre}}</h3>
+        <p>{{pro.descripcion}}</p>
+        <span>{{pro.precio | currency:'EUR'}}</span>
+        <button>Ver</button>
+      </div>
+    </ng-template>
+    }
+  </ngb-carousel>
 </div>
