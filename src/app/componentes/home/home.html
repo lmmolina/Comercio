@@ -4,10 +4,15 @@
     <ng-template ngbSlide>
       <div class="my-carousel-item">
         <img [src]="pro.imagenUrl" />
-        <h3>{{pro.nombre}}</h3>
-        <p>{{pro.descripcion}}</p>
-        <span>{{pro.precio | currency:'EUR'}}</span>
-        <button>Ver</button>
+        <h3>{{ pro.nombre }}</h3>
+        <p>{{ pro.descripcion }}</p>
+        <span>{{ pro.precio | currency : "EUR" }}</span>
+        <button
+          [routerLink]="['/producto/' + pro.id]"
+          routerLinkActive="router-link-active"
+        >
+          Ver
+        </button>
       </div>
     </ng-template>
     }

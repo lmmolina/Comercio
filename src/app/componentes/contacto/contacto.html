@@ -1,1 +1,82 @@
-<p>contacto works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Contacto</h1>
+      <p>
+        Para cualquier consulta, por favor completa el siguiente formulario:
+      </p>
+      <form #formulario="ngForm" (ngSubmit)="enviarFormulario(formulario)">
+        <div class="mb-3">
+          <label for="name" class="form-label">Nombre</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="nombre"
+            placeholder="Tu nombre"
+            minlength="3"
+            required
+            [(ngModel)]="nombre"
+            #nombreRef="ngModel"
+          />
+          <p style="color: red; height: 20px">
+            @if (nombreRef.invalid&& nombreRef.touched) { El nombre es
+            obligatorio y debe tener al menos 3 caracteres. }
+          </p>
+          <label for="mail" class="form-label">Correo</label>
+          <input
+            type="email"
+            class="form-control"
+            id="mail"
+            name="correo"
+            placeholder="Tu Correo electrónico"
+            required
+            email
+            [(ngModel)]="correo"
+            #correoRef="ngModel"
+          />
+          <p style="color: red; height: 20px">
+            @if (correoRef.invalid&& correoRef.touched) { El correo no es
+            valido.}
+          </p>
+          <label for="category" class="form-label">Tipo de asistencia</label>
+          <select
+            class="form-select"
+            id="category"
+            name="categoria"
+            required
+            [(ngModel)]="categoria"
+            #categoriaRef="ngModel"
+          >
+            <option value="" disabled selected>Selecciona una categoría</option>
+            <option value="general">Consulta General</option>
+            <option value="technical">Soporte Técnico</option>
+            <option value="sales">Ventas</option>
+            <option value="other">Otro</option>
+          </select>
+          <p style="color: red; height: 20px">
+            @if (categoriaRef.invalid&& categoriaRef.touched) { Seleccione una
+            de las opciones anteriores. }
+          </p>
+          <label for="message" class="form-label">Mensaje:</label>
+          <textarea
+            class="form-control"
+            id="message"
+            name="mensaje"
+            rows="4"
+            placeholder="Tu mensaje"
+            minlength="10"
+            required
+            [(ngModel)]="mensaje"
+            #mensajeRef="ngModel"
+          ></textarea>
+          <p style="color: red; height: 20px">
+            @if (mensajeRef.invalid&& mensajeRef.touched) { El mensaje es
+            obligatorio y debe tener al menos 10 caracteres. }
+          </p>
+          <button type="submit" class="btn btn-primary mt-3">Enviar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
