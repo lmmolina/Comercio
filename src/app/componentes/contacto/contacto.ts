@@ -14,11 +14,12 @@ export class Contacto {
   categoria: string = '';
   enviarFormulario(form: NgForm) {
     console.log(form);
-    
+
     if (form.invalid) {
-      Object.values(form.controls).forEach((control) => control.markAsTouched());
-    }else{
-      
+      Object.values(form.controls).forEach((control) =>
+        control.markAsTouched()
+      );
+    } else {
     }
   }
 }
