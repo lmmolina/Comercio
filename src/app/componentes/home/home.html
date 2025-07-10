@@ -3,10 +3,10 @@
     @for (pro of productos; track $index) {
     <ng-template ngbSlide>
       <div class="my-carousel-item">
-        <img [src]="pro.imagenUrl" />
-        <h3>{{ pro.nombre }}</h3>
-        <p>{{ pro.descripcion }}</p>
-        <span>{{ pro.precio | currency : "EUR" }}</span>
+        <img [src]="pro.images[0]" />
+        <h3>{{ pro.title }}</h3>
+        <p>{{ pro.description }}</p>
+        <span>{{ pro.price | currency : "EUR" }}</span>
         <button
           [routerLink]="['/producto/' + pro.id]"
           routerLinkActive="router-link-active"

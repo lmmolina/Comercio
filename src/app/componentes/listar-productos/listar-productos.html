@@ -12,15 +12,15 @@
             <div class="card h-100">
               <img
                 class="card-img-top"
-                [src]="producto.imagenUrl"
-                alt="{{ producto.nombre }}"
+                [src]="producto.images[0]"
+                alt="{{ producto.title }}"
               />
               <div class="card-body">
-                <h5 class="card-title">{{ producto.nombre }}</h5>
-                <p class="card-text">{{ producto.descripcion }}</p>
+                <h5 class="card-title">{{ producto.title }}</h5>
+                <p class="card-text">{{ producto.description }}</p>
                 <p class="card-text">
                   <small class="text-muted"
-                    >Precio: {{ producto.precio | currency: "EUR" }}</small
+                    >Precio: {{ producto.price | currency : "EUR" }}</small
                   >
                 </p>
                 <button
@@ -35,5 +35,32 @@
         </ng-container>
       </div>
     </div>
+  </div>
+  <div class="paginado">
+    <button
+      [hidden]="activa == 0"
+      class="prev"
+      [routerLink]="['/productos']"
+      [queryParams]="{ pag: activa - 1 }"
+    >
+      «
+    </button>
+    <button
+      *ForI="paginas; let i = index"
+      [ngClass]="{ activa: i == activa }"
+      class="pagina"
+      [routerLink]="['/productos']"
+      [queryParams]="{ pag: i }"
+    >
+      {{ i + 1 }}
+    </button>
+    <button
+      [hidden]="activa + 1 == paginas"
+      class="next"
+      [routerLink]="['/productos']"
+      [queryParams]="{ pag: activa + 1 }"
+    >
+      »
+    </button>
   </div>
 </div>

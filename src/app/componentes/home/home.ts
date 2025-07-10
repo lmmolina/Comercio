@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { Productos } from '../../servicios/productos';
 import { Producto } from '../../modelos/producto';
@@ -11,9 +11,14 @@ import { RouterModule } from '@angular/router';
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
-export class Home {
+export class Home implements OnInit {
   productos!: Producto[];
-  constructor(productoService: Productos) {
-    this.productos = productoService.productos;
+  constructor(private productoService: Productos) {}
+  ngOnInit(): void {
+    this.productoService.getPremiumProducts().subscribe((data) => {
+      if (data) {
+        this.productos = data;
+      }
+    });
   }
 }

@@ -6,6 +6,18 @@
       <li><a routerLink="/"> Inicio</a></li>
       <li><a routerLink="/productos">Productos</a></li>
       <li><a routerLink="/contacto">Contacto</a></li>
+      <li class="carrito-container">
+        <a href="/carrito">
+          <img
+            src="/assets/img/9284424.png"
+            alt="Carrito"
+            class="icono-carrito"
+          />
+          @if (cantProductos>0) {
+          <span class="contador-carrito">{{ cantProductos }}</span>
+          }
+        </a>
+      </li>
     </ul>
   </nav>
 </header>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Producto } from '../../modelos/producto';
 import { Productos } from '../../servicios/productos';
@@ -10,16 +10,19 @@ import { CommonModule } from '@angular/common';
   templateUrl: './producto.html',
   styleUrl: './producto.scss',
 })
-export class ProductoComponent {
+export class ProductoComponent implements OnInit {
   producto!: Producto;
-  constructor(route: ActivatedRoute, productos: Productos) {
-    let id = Number(route.snapshot.paramMap.get('id'));
-    productos.productos.forEach((p) => {
-      if (p.id == id) {
-        this.producto = p;
+  constructor(private route: ActivatedRoute, private productos: Productos) {}
+  ngOnInit(): void {
+    let id = Number(this.route.snapshot.paramMap.get('id'));
+    this.productos.getProductByID(id).subscribe((data) => {
+      if (data.ok && data.body) {
+        this.producto = data.body;
       }
     });
   }
 
-  agregarAlCarrito() {}
+  agregarAlCarrito(id: number) {
+    this.productos.addProductToCart(id);
+  }
 }

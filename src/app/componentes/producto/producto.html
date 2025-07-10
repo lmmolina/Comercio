@@ -1,17 +1,17 @@
 <div class="content">
-  <h2>{{ producto.nombre }}</h2>
+  <h2>{{ producto.title }}</h2>
   <div class="row">
     <div class="col-md-6">
       <img
-        [src]="producto.imagenUrl"
-        alt="{{ producto.nombre }}"
+        [src]="producto.images[0]"
+        alt="{{ producto.title }}"
         class="img-fluid"
       />
     </div>
     <div class="col-md-6">
-      <p>{{ producto.descripcion }}</p>
-      <h3>Precio: {{ producto.precio | currency: "EUR" }}</h3>
-      <button class="btn btn-primary" (click)="agregarAlCarrito()">
+      <p>{{ producto.description }}</p>
+      <h3>Precio: {{ producto.price | currency : "EUR" }}</h3>
+      <button class="btn btn-primary" (click)="agregarAlCarrito(producto.id)">
         Agregar al carrito
       </button>
     </div>

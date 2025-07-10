@@ -1,21 +1,89 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Producto } from '../modelos/producto';
+import { map, Observable } from 'rxjs';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class Productos {
+  total: number = 0;
+  idCarrito!: number;
+  cantProductos = signal<number>(0);
+  constructor(private http: HttpClient) {}
 
-  productos = [ new Producto(1, 'Producto 1', 'Descripción del producto 1', 100, 'https://d1fufvy4xao6k9.cloudfront.net/images/landings/421/3-4-1.jpg'),
-                new Producto(2, 'Producto 2', 'Descripción del producto 2', 200, 'https://d1fufvy4xao6k9.cloudfront.net/images/landings/421/3-4-1.jpg'),
-                new Producto(3, 'Producto 3', 'Descripción del producto 3', 300, 'https://d1fufvy4xao6k9.cloudfront.net/images/landings/421/3-4-1.jpg'),
-                new Producto(4, 'Producto 4', 'Descripción del producto 4', 400, 'https://d1fufvy4xao6k9.cloudfront.net/images/landings/421/3-4-1.jpg'),
-                new Producto(5, 'Producto 5', 'Descripción del producto 5', 500, 'https://d1fufvy4xao6k9.cloudfront.net/images/landings/421/3-4-1.jpg'),
-                new Producto(6, 'Producto 1', 'Descripción del producto 1', 100, 'https://d1fufvy4xao6k9.cloudfront.net/images/landings/421/3-4-1.jpg'),
-                new Producto(7, 'Producto 2', 'Descripción del producto 2', 200, 'https://d1fufvy4xao6k9.cloudfront.net/images/landings/421/3-4-1.jpg'),
-                new Producto(8, 'Producto 3', 'Descripción del producto 3', 300, 'https://d1fufvy4xao6k9.cloudfront.net/images/landings/421/3-4-1.jpg'),
-                new Producto(9, 'Producto 4', 'Descripción del producto 4', 400, 'https://d1fufvy4xao6k9.cloudfront.net/images/landings/421/3-4-1.jpg')];
-                
+  getPremiumProducts(): Observable<Producto[] | null> {
+    return this.http
+      .get<any>('https://dummyjson.com/products?limit=100', {
+        observe: 'response',
+      })
+      .pipe(
+        map((res) => {
+          if (res.ok && res.body) {
+            this.total = res.body.total;
+            console.log(this.total + ' ' + res.body.products.length);
+            return res.body.products.filter((r: Producto) => r.price > 500);
+          }
+          return null;
+        })
+      );
+  }
 
-  constructor() { }
+  getProductsPerPAge(page: number): Observable<HttpResponse<any>> {
+    return this.http.get<any>(
+      'https://dummyjson.com/products?limit=15&skip=' + page * 15,
+      { observe: 'response' }
+    );
+  }
+
+  getProductByID(id: number): Observable<HttpResponse<Producto>> {
+    return this.http.get<Producto>('https://dummyjson.com/products/' + id, {
+      observe: 'response',
+    });
+  }
+
+  addProductToCart(id: number) {
+    const idcar = localStorage.getItem('idCarrito');
+    this.idCarrito = idcar !== null ? +idcar : -1;
+    let body: any = {
+      products: [
+        {
+          id: id,
+          quantity: 1,
+        },
+      ],
+    };
+    if (this.idCarrito == -1) {
+      body.userId = 1;
+      var solicitud = this.http.post<any>(
+        'https://dummyjson.com/carts/add',
+        body,
+        {
+          observe: 'response',
+        }
+      );
+    } else {
+      body.merge = true;
+      var solicitud = this.http.put<any>(
+        'https://dummyjson.com/carts/' + this.idCarrito,
+        body,
+        {
+          observe: 'response',
+        }
+      );
+    }
+
+    solicitud
+      .pipe(
+        map((res) => {
+          if (res.ok && res.body) {
+            if (this.idCarrito == -1) {
+              localStorage.setItem('idCarrito', res.body.id);
+            }
+            this.cantProductos.set(+res.body.totalProducts);
+          }
+        })
+      )
+      .subscribe();
+  }
 }
